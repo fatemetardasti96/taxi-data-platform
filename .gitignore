@@ -1,0 +1,8 @@
+.DS_Store
+.vscode/
+
+*.pdf
+data viz/*
+general-data/*
+
+fct_weather.csv

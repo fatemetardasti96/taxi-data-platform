@@ -1,0 +1,48 @@
+version: 2
+
+models:
+  - name: stg_taxi_trips
+    description: >
+      One-to-one staging view of bronze.taxi_trips with type casting only.
+      No cleansing or business rules are applied at this layer.
+    columns:
+      - name: vendor_id
+        description: TLC VendorID (TPEP provider code).
+      - name: pickup_datetime
+        description: tpep_pickup_datetime — when the meter was engaged.
+      - name: dropoff_datetime
+        description: tpep_dropoff_datetime — when the meter was disengaged.
+      - name: passenger_count
+        description: Number of passengers in the vehicle.
+      - name: trip_distance
+        description: Trip distance in miles from the taximeter.
+      - name: rate_code_id
+        description: TLC RatecodeID at end of trip.
+      - name: store_and_fwd_flag
+        description: Store-and-forward flag from the vendor.
+      - name: pickup_location_id
+        description: TLC Taxi Zone ID for pickup (PULocationID).
+      - name: dropoff_location_id
+        description: TLC Taxi Zone ID for dropoff (DOLocationID).
+      - name: payment_type
+        description: Payment type code from TLC data dictionary.
+      - name: fare_amount
+        description: Meter-calculated fare amount.
+      - name: extra
+        description: Miscellaneous extras and surcharges.
+      - name: mta_tax
+        description: MTA tax amount.
+      - name: tip_amount
+        description: Tip amount.
+      - name: tolls_amount
+        description: Total tolls paid.
+      - name: improvement_surcharge
+        description: Improvement surcharge amount.
+      - name: total_amount
+        description: Total amount charged.
+      - name: congestion_surcharge
+        description: Congestion surcharge amount.
+      - name: airport_fee
+        description: Airport fee amount.
+      - name: ingestion_ts
+        description: Batch ingestion timestamp from the bronze pipeline.

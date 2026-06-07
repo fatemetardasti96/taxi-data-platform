@@ -1,0 +1,16 @@
+version: 2
+
+models:
+  - name: stg_weather
+    description: >
+      One-to-one staging view of bronze.weather with type casting only.
+      No cleansing or business rules are applied at this layer.
+    columns:
+      - name: latitude
+        description: Latitude of the weather station.
+      - name: longitude
+        description: Longitude of the weather station.
+      - name: timestamp
+        description: Timestamp of the weather data.
+      - name: weather_code
+        description: Weather code from the weather data.

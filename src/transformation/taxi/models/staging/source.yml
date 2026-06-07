@@ -1,0 +1,14 @@
+version: 2
+
+sources:
+  - name: bronze
+    description: Raw trip data loaded by the batch ingestion pipeline.
+    schema: bronze
+    tables:
+      - name: taxi_trips
+        description: >
+          NYC TLC Yellow Taxi trip records (Parquet). Field definitions follow the
+          official TLC data dictionary for yellow trip records.
+
+      - name: weather
+        

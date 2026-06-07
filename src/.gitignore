@@ -1,0 +1,32 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+
+# DuckDB
+*.duckdb
+
+# Historical data
+*.parquet
+
+# Pipeline staging and local data artifacts
+data/
+
+# dbt
+transformation/taxi/target/
+transformation/taxi/dbt_packages/
+transformation/taxi/logs/
+
+logs/
+
+*.gitkeep
+
+.DS_Store
+
+ingestion/utils/taxi_zone_lookup_with_coordinates.csv

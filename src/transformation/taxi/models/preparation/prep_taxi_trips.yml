@@ -1,0 +1,129 @@
+version: 2
+
+models:
+  - name: prep_taxi_trips
+    description: >
+      Prepared yellow taxi trips with cleansing applied on top of staging.
+      Invalid values are normalized or nulled; rows failing critical checks are removed.
+    data_tests:
+      - pickup_before_dropoff
+    columns:
+      - name: vendor_id
+        description: >
+          TPEP provider code. 1=Creative Mobile Technologies, 2=Curb Mobility,
+          6=Myle Technologies, 7=Helix.
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: [1, 2, 6, 7]
+
+      - name: pickup_datetime
+        description: Normalized pickup timestamp (ISO-like UTC timestamp).
+        data_tests:
+          - not_null
+
+      - name: dropoff_datetime
+        description: Normalized dropoff timestamp (ISO-like UTC timestamp).
+        data_tests:
+          - not_null
+
+      - name: passenger_count
+        description: Passenger count constrained to 0-9.
+        data_tests:
+          - not_null
+          - non_negative
+          - accepted_range:
+              arguments:
+                min_value: 0
+                max_value: 9
+
+      - name: trip_distance
+        description: Non-negative trip distance in miles.
+        data_tests:
+          - not_null
+          - non_negative
+
+      - name: rate_code_id
+        description: >
+          Final rate code. 1=Standard, 2=JFK, 3=Newark, 4=Nassau/Westchester,
+          5=Negotiated fare, 6=Group ride, 99=Unknown.
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: [1, 2, 3, 4, 5, 6, 99]
+
+      - name: store_and_fwd_flag
+        description: Normalized store-and-forward flag.
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ["Y", "N"]
+
+      - name: pickup_location_id
+        description: Valid TLC Taxi Zone ID for pickup (1-265).
+        data_tests:
+          - not_null
+          - accepted_range:
+              arguments:
+                min_value: 1
+                max_value: 265
+
+      - name: dropoff_location_id
+        description: Valid TLC Taxi Zone ID for dropoff (1-265).
+        data_tests:
+          - not_null
+          - accepted_range:
+              arguments:
+                min_value: 1
+                max_value: 265
+
+      - name: payment_type
+        description: >
+          Payment method. 0=Flex Fare, 1=Credit card, 2=Cash, 3=No charge,
+          4=Dispute, 5=Unknown, 6=Voided trip.
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: [0, 1, 2, 3, 4, 5, 6]
+
+      - name: fare_amount
+        description: Non-negative fare amount when present.
+
+      - name: extra
+        description: Non-negative extra charges when present.
+
+      - name: mta_tax
+        description: Non-negative MTA tax when present.
+
+      - name: tip_amount
+        description: Non-negative tip amount when present.
+
+      - name: tolls_amount
+        description: Non-negative tolls amount when present.
+
+      - name: improvement_surcharge
+        description: Non-negative improvement surcharge when present.
+
+      - name: total_amount
+        description: Non-negative total amount when present.
+
+      - name: congestion_surcharge
+        description: Non-negative congestion surcharge when present.
+
+      - name: airport_fee
+        description: Non-negative airport fee when present.
+
+      - name: pickup_latitude
+        description: Latitude of the pickup location.
+      - name: pickup_longitude
+        description: Longitude of the pickup location.
+      - name: dropoff_latitude
+        description: Latitude of the dropoff location.
+      - name: dropoff_longitude
+        description: Longitude of the dropoff location.
+      - name: pickup_zone
+        description: Name of the pickup zone.
+      - name: dropoff_zone
+        description: Name of the dropoff zone.

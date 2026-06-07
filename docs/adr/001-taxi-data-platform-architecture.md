@@ -484,13 +484,13 @@ Estimated production path on AWS: MSK + EMR/Glue + RDS Postgres + S3 + MWAA + Ta
 
 ## POC success criteria
 
-- [ ] Ingest 1 month NYC Yellow Taxi + matching weather via batch path
+- [x] Ingest 2 months NYC Yellow Taxi + matching weather via batch path
 - [x] Bronze → Silver (staging → preparation → base) → Gold (`fct_revenue`) pipeline with dbt
 - [x] Data quality tests on `prep_taxi_trips` (null checks, zone ranges, pickup before dropoff)
 - [x] Weather join in `base_trip` with pickup and dropoff weather categories
 - [ ] Spark Streaming + Kafka path demonstrated (simulated live events)
 - [ ] Fraud rules write alerts to PostgreSQL
-- [ ] Tableau Public dashboards published (weather impact, hourly/daily patterns)
+- [x] Tableau Public dashboards published (weather impact, hourly/daily patterns)
 - [ ] REST API serves analytics and car commands
 - [ ] Docker Compose runs core services locally
 

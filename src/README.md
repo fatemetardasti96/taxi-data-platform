@@ -1,6 +1,6 @@
 # Taxi Data Platform
 
-The presentation can be found at [google slides](https://docs.google.com/presentation/d/1xQmKWXvFQdV-gS8ExFmOOPoQoxOQ1b7w0KzbR8A6BMM/edit?slide=id.g3ea0eaf2895_0_140#slide=id.g3ea0eaf2895_0_140)
+Ingest NYC TLC trips and historical weather into DuckDB bronze, then build silver and gold models with dbt (`transformation/taxi`). See the [repo overview](../README.md) for structure and the [presentation slides](https://docs.google.com/presentation/d/1xQmKWXvFQdV-gS8ExFmOOPoQoxOQ1b7w0KzbR8A6BMM/edit?slide=id.g3ea0eaf2895_0_140#slide=id.g3ea0eaf2895_0_140).
 
 ## Batch ingestion (DuckDB bronze)
 

@@ -53,7 +53,11 @@ class HistoricalDataIngestion:
             if destination.exists():
                 logger.info("Using cached file: %s", destination)
             else:
-                self._download_parquet_file(self._trip_data_url(year, month), destination)
+                try:
+                    self._download_parquet_file(self._trip_data_url(year, month), destination)
+                except Exception as e:
+                    logger.error("Error downloading %s: %s", destination, e)
+                    continue
             downloaded_files.append(destination)
 
         return sorted(downloaded_files)
@@ -152,7 +156,7 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         "--months",
         nargs="+",
         default=["01"],
-        help="One or more trip data months to download and ingest (default: 01)",
+        help="One or more trip data months to download and ingest (e.g. 01 02 03)",
     )
     return parser.parse_args(argv)
 

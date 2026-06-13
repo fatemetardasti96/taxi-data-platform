@@ -97,6 +97,11 @@ class DuckDBBronzeWriter:
                     """
                 )
             elif mode == "merge":
+                """
+                Merge the staging table into the target table by record_hash to ensure not ingesting duplicate rows.
+                Delete the rows with the same record_hash in the target table.
+                Insert the rows from the staging table into the target table.
+                """
                 if not self._table_exists(conn):
                     conn.execute(
                         f"""

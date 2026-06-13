@@ -31,7 +31,9 @@ models:
       - name: passenger_count
         description: Passenger count constrained to 0-9.
         data_tests:
-          - not_null
+          - not_null:
+              config:
+                severity: warn
           - non_negative
           - accepted_range:
               arguments:

@@ -37,8 +37,30 @@ class DuckDBBronzeWriter:
         logger.info("Loaded %s rows into temp staging table", staging_count)
         return staging_count
 
+    def _table_columns(self, conn: duckdb.DuckDBPyConnection, table_name: str) -> list[str]:
+        rows = conn.execute(f"DESCRIBE {table_name}").fetchall()
+        return [row[0] for row in rows]
+
+    def _aligned_select(
+        self,
+        conn: duckdb.DuckDBPyConnection,
+        target_table: str,
+        source_table: str,
+    ) -> str:
+        target_desc = conn.execute(f"DESCRIBE {target_table}").fetchall()
+        source_columns = {row[0] for row in conn.execute(f"DESCRIBE {source_table}").fetchall()}
+        expressions = [
+            column if column in source_columns else f"CAST(NULL AS {column_type}) AS {column}"
+            for column, column_type, *_ in target_desc
+        ]
+        return ", ".join(expressions)
+
     def _merge_staging(self, conn: duckdb.DuckDBPyConnection) -> int:
         staging_count = conn.execute(f"SELECT COUNT(*) FROM {STAGING_TABLE}").fetchone()[0]
+        target_columns = self._table_columns(conn, self.config.qualified_table_name)
+        aligned_select = self._aligned_select(conn, self.config.qualified_table_name, STAGING_TABLE)
+        column_list = ", ".join(target_columns)
+
         conn.execute(
             f"""
             DELETE FROM {self.config.qualified_table_name} AS target
@@ -49,8 +71,8 @@ class DuckDBBronzeWriter:
         )
         conn.execute(
             f"""
-            INSERT INTO {self.config.qualified_table_name}
-            SELECT * FROM {STAGING_TABLE}
+            INSERT INTO {self.config.qualified_table_name} ({column_list})
+            SELECT {aligned_select} FROM {STAGING_TABLE}
             """
         )
         logger.info("Merged %s staged rows by record_hash", staging_count)

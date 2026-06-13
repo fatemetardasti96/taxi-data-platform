@@ -171,7 +171,10 @@ def main(argv: list[str] | None = None) -> int:
         )
         return 0
     finally:
-        spark.stop()
+        try:
+            spark.stop()
+        except Exception:
+            logger.warning("Spark session shutdown raised an error; ingestion already completed")
 
 
 if __name__ == "__main__":

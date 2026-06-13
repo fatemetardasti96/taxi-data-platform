@@ -16,6 +16,8 @@ select
     trips.pickup_zone,
     trips.dropoff_zone,
     trips.fare_amount,
+    trips.tolls_amount,
+    trips.total_amount,
     pickup_weather.weather as pickup_weather,
     pickup_weather.weather_category as pickup_weather_category,
     dropoff_weather.weather as dropoff_weather,

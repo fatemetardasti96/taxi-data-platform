@@ -1,0 +1,45 @@
+version: 2
+
+models:
+  - name: fct_zone_daily
+    description: >
+      Daily revenue, trip count, and average distance/duration by pickup zone (KPI 1).
+    columns:
+      - name: pickup_date
+        description: Calendar date of trip pickup.
+      - name: pickup_zone
+        description: TLC taxi zone name at pickup.
+      - name: trip_count
+        description: Number of trips picked up in the zone on that date.
+      - name: revenue
+        description: Sum of total_amount for trips in the zone on that date.
+      - name: avg_revenue_per_trip
+        description: Mean total_amount per trip.
+      - name: avg_trip_distance
+        description: Mean trip_distance in miles.
+      - name: avg_trip_duration_minutes
+        description: Mean trip duration in minutes.
+
+  - name: fct_weather_impact
+    description: >
+      Trip and revenue metrics by weather category with uplift vs clear/cloudy baseline per zone (KPI 2).
+    columns:
+      - name: weather_category
+        description: Weather category at pickup (from weather_code_mapping seed).
+      - name: pickup_zone
+        description: TLC taxi zone name at pickup.
+      - name: trip_count_uplift_pct
+        description: Percent change in trip count vs clear_or_cloudy baseline for the same zone.
+      - name: revenue_uplift_pct
+        description: Percent change in revenue vs clear_or_cloudy baseline for the same zone.
+
+  - name: fct_zone_hourly_demand
+    description: >
+      Hourly trip count and revenue by pickup zone for demand and fleet planning (KPI 3).
+    columns:
+      - name: pickup_hour
+        description: Hour bucket of trip pickup timestamp.
+      - name: pickup_zone
+        description: TLC taxi zone name at pickup.
+      - name: trip_count
+        description: Number of trips picked up in the zone during the hour.

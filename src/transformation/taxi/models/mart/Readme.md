@@ -1,4 +1,8 @@
-what are some metrics we want to measure?
-- daily revenue per city 
-- length of the trips
-- weather impact on revenue and length of trip
+# KPI metrics (Gold layer)
+
+Primary KPIs
+
+| KPI | Gold table | Metric |
+|-----|------------|--------|
+| 1 — Revenue | `fct_revenue` | weather + datetime + zone grain |
+| 2 — Weather impact | `fct_weather_impact` | Demand and revenue by weather vs clear/cloudy baseline (uplift %) |
